@@ -21,3 +21,96 @@ Processing by Rails::WelcomeController#index as HTML
 Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT pg_try_advisory_lock(773059267852899510) /*application='Communa'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Communa'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (3.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Communa'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (2.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2026-04-29 19:46:37.091583', '2026-04-29 19:46:37.091586') RETURNING "key" /*application='Communa'*/[0m
+Migrating to CreateActivityTypes (20260429194213)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[35m (56.2ms)[0m  [1m[35mCREATE TABLE "activity_types" ("id" bigserial primary key, "name" character varying, "description" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Communa'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260429194213') RETURNING "version" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+Migrating to CreateOrganizations (20260429194259)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[35m (22.2ms)[0m  [1m[35mCREATE TABLE "organizations" ("id" bigserial primary key, "name" character varying, "description" text, "website" character varying, "location" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Communa'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260429194259') RETURNING "version" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+Migrating to CreateActivities (20260429194305)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[35m (30.4ms)[0m  [1m[35mCREATE TABLE "activities" ("id" bigserial primary key, "title" character varying, "date" date, "people_impacted" integer, "hours" decimal, "notes" text, "organization_id" bigint NOT NULL, "activity_type_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_f78e5275f3"
+FOREIGN KEY ("organization_id")
+  REFERENCES "organizations" ("id")
+, CONSTRAINT "fk_rails_24e9fd5314"
+FOREIGN KEY ("activity_type_id")
+  REFERENCES "activity_types" ("id")
+) /*application='Communa'*/[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE INDEX "index_activities_on_organization_id" ON "activities" ("organization_id") /*application='Communa'*/[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE INDEX "index_activities_on_activity_type_id" ON "activities" ("activity_type_id") /*application='Communa'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260429194305') RETURNING "version" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_advisory_unlock(773059267852899510) /*application='Communa'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Communa'*/[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[35mSET search_path TO public /*application='Communa'*/[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[35mSET search_path TO "$user", public /*application='Communa'*/[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[35mSET search_path TO public /*application='Communa'*/[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO "$user", public /*application='Communa'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Communa'*/[0m
+  [1m[36mActivity Load (0.8ms)[0m  [1m[34mSELECT "activities".* FROM "activities" /*application='Communa'*/[0m
+  [1m[36mOrganization Load (0.6ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations" /*application='Communa'*/[0m
+  [1m[36mActivityType Load (0.4ms)[0m  [1m[34mSELECT "activity_types".* FROM "activity_types" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (2.3ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mActivityType Exists? (4.2ms)[0m  [1m[34mSELECT 1 AS one FROM "activity_types" WHERE "activity_types"."name" = 'Donation' LIMIT 1 /*application='Communa'*/[0m
+  [1m[36mActivityType Create (0.6ms)[0m  [1m[32mINSERT INTO "activity_types" ("name", "description", "created_at", "updated_at") VALUES ('Donation', 'Financial or material donations to the community', '2026-04-29 19:50:21.880093', '2026-04-29 19:50:21.880093') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (2.8ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mActivityType Exists? (1.4ms)[0m  [1m[34mSELECT 1 AS one FROM "activity_types" WHERE "activity_types"."name" = 'Volunteering' LIMIT 1 /*application='Communa'*/[0m
+  [1m[36mActivityType Create (0.4ms)[0m  [1m[32mINSERT INTO "activity_types" ("name", "description", "created_at", "updated_at") VALUES ('Volunteering', 'Staff or members volunteering their time', '2026-04-29 19:50:21.898176', '2026-04-29 19:50:21.898176') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mActivityType Exists? (4.1ms)[0m  [1m[34mSELECT 1 AS one FROM "activity_types" WHERE "activity_types"."name" = 'Event' LIMIT 1 /*application='Communa'*/[0m
+  [1m[36mActivityType Create (0.4ms)[0m  [1m[32mINSERT INTO "activity_types" ("name", "description", "created_at", "updated_at") VALUES ('Event', 'Community events organized or sponsored', '2026-04-29 19:50:21.908561', '2026-04-29 19:50:21.908561') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mActivityType Exists? (4.9ms)[0m  [1m[34mSELECT 1 AS one FROM "activity_types" WHERE "activity_types"."name" = 'Partnership' LIMIT 1 /*application='Communa'*/[0m
+  [1m[36mActivityType Create (0.5ms)[0m  [1m[32mINSERT INTO "activity_types" ("name", "description", "created_at", "updated_at") VALUES ('Partnership', 'Formal partnerships with local organizations', '2026-04-29 19:50:21.929401', '2026-04-29 19:50:21.929401') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mActivityType Exists? (1.9ms)[0m  [1m[34mSELECT 1 AS one FROM "activity_types" WHERE "activity_types"."name" = 'Education' LIMIT 1 /*application='Communa'*/[0m
+  [1m[36mActivityType Create (0.5ms)[0m  [1m[32mINSERT INTO "activity_types" ("name", "description", "created_at", "updated_at") VALUES ('Education', 'Workshops, training, and educational programs', '2026-04-29 19:50:21.947821', '2026-04-29 19:50:21.947821') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mOrganization Create (1.3ms)[0m  [1m[32mINSERT INTO "organizations" ("name", "description", "website", "location", "created_at", "updated_at") VALUES ('Green Valley Credit Union', 'A member-owned financial cooperative serving the Green Valley region since 1987.', 'https://greenvalleycu.example.com', 'Green Valley, CA', '2026-04-29 19:50:21.955619', '2026-04-29 19:50:21.955619') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mOrganization Create (4.8ms)[0m  [1m[32mINSERT INTO "organizations" ("name", "description", "website", "location", "created_at", "updated_at") VALUES ('Riverside Community Bank', 'Community-focused bank reinvesting in local neighborhoods and small businesses.', 'https://riversidebank.example.com', 'Riverside, TX', '2026-04-29 19:50:21.960414', '2026-04-29 19:50:21.960414') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (2.8ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mOrganization Create (1.5ms)[0m  [1m[32mINSERT INTO "organizations" ("name", "description", "website", "location", "created_at", "updated_at") VALUES ('Northside Savings & Loan', 'Serving working families in the Northside district for over 40 years.', 'https://northsidesavings.example.com', 'Northside, OH', '2026-04-29 19:50:21.971659', '2026-04-29 19:50:21.971659') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mActivity Create (2.0ms)[0m  [1m[32mINSERT INTO "activities" ("title", "date", "people_impacted", "hours", "notes", "organization_id", "activity_type_id", "created_at", "updated_at") VALUES ('Annual Food Bank Drive', '2026-01-15', 320, 48.0, 'Collected 2,400 lbs of food across 3 collection points.', 1, 1, '2026-04-29 19:50:21.990847', '2026-04-29 19:50:21.990847') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mActivity Create (1.5ms)[0m  [1m[32mINSERT INTO "activities" ("title", "date", "people_impacted", "hours", "notes", "organization_id", "activity_type_id", "created_at", "updated_at") VALUES ('Financial Literacy Workshop', '2026-02-10', 45, 6.0, 'Covered budgeting, credit scores, and savings strategies for first-time earners.', 1, 5, '2026-04-29 19:50:21.996655', '2026-04-29 19:50:21.996655') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mActivity Create (1.8ms)[0m  [1m[32mINSERT INTO "activities" ("title", "date", "people_impacted", "hours", "notes", "organization_id", "activity_type_id", "created_at", "updated_at") VALUES ('Neighborhood Cleanup Day', '2026-03-22', 150, 120.0, '40 volunteers cleaned 6 blocks of the downtown corridor.', 2, 2, '2026-04-29 19:50:22.001544', '2026-04-29 19:50:22.001544') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mActivity Create (2.1ms)[0m  [1m[32mINSERT INTO "activities" ("title", "date", "people_impacted", "hours", "notes", "organization_id", "activity_type_id", "created_at", "updated_at") VALUES ('Small Business Grant Program', '2026-02-28', 12, NULL, 'Awarded $60,000 in grants to 12 local small businesses.', 2, 1, '2026-04-29 19:50:22.006329', '2026-04-29 19:50:22.006329') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mActivity Create (1.4ms)[0m  [1m[32mINSERT INTO "activities" ("title", "date", "people_impacted", "hours", "notes", "organization_id", "activity_type_id", "created_at", "updated_at") VALUES ('Youth Mentorship Partnership', '2026-01-30', 80, 200.0, 'Partnered with 4 local high schools for a semester-long mentorship program.', 3, 4, '2026-04-29 19:50:22.011505', '2026-04-29 19:50:22.011505') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Communa'*/[0m
+  [1m[36mActivity Create (1.5ms)[0m  [1m[32mINSERT INTO "activities" ("title", "date", "people_impacted", "hours", "notes", "organization_id", "activity_type_id", "created_at", "updated_at") VALUES ('Community Health Fair', '2026-04-05', 500, 32.0, 'Free health screenings, dental checkups, and wellness resources.', 3, 3, '2026-04-29 19:50:22.016346', '2026-04-29 19:50:22.016346') RETURNING "id" /*application='Communa'*/[0m
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT /*application='Communa'*/[0m
+  [1m[36mActivityType Count (3.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "activity_types" /*application='Communa'*/[0m
+  [1m[36mOrganization Count (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "organizations" /*application='Communa'*/[0m
+  [1m[36mActivity Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "activities" /*application='Communa'*/[0m
+  [1m[36mOrganization Count (23.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "organizations" /*application='Communa'*/[0m
+  [1m[36mActivity Count (0.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "activities" /*application='Communa'*/[0m
+  [1m[36mActivityType Pluck (0.2ms)[0m  [1m[34mSELECT "activity_types"."name" FROM "activity_types" /*application='Communa'*/[0m
+  [1m[36mActivity Load (0.6ms)[0m  [1m[34mSELECT "activities".* FROM "activities" ORDER BY "activities"."id" ASC LIMIT 1 /*application='Communa'*/[0m
+  [1m[36mOrganization Load (0.4ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations" WHERE "organizations"."id" = 1 /*application='Communa'*/[0m
+  [1m[36mActivityType Load (0.7ms)[0m  [1m[34mSELECT "activity_types".* FROM "activity_types" WHERE "activity_types"."id" = 1 /*application='Communa'*/[0m
